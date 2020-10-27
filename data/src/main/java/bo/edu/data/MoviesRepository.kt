@@ -2,7 +2,9 @@ package bo.edu.data
 
 import bo.edu.domain.Movie
 
-class MoviesRepository(val remoteDataSource: IRemoteDataSource) {
-    fun getPopularMovies(): List<Movie> = remoteDataSource.getPopularMovies()
+class MoviesRepository(val remoteDataSource: IRemoteDataSource, val localDataSource: ILocalDataSource) {
+    suspend fun getPopularMovies(): List<Movie> {
+        return remoteDataSource.getPopularMovies()
+    }
 
 }
