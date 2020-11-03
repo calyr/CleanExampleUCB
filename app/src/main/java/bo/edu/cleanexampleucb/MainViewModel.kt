@@ -9,7 +9,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val popularMovie: GetPopularMovie): ViewModel() {
+class MainViewModel(private val popularMovie: GetPopularMovie): ScopedViewModel() {
+
+    init {
+        initScope()
+    }
 
     val model: LiveData<UiModel>
         get() = _model
@@ -19,7 +23,7 @@ class MainViewModel(private val popularMovie: GetPopularMovie): ViewModel() {
     }
 
     fun loadMovies() {
-        GlobalScope.launch(Dispatchers.IO) {
+        launch {
             _model.value = UiModel.Content( popularMovie.invoke())
         }
 
