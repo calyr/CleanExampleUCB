@@ -15,9 +15,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.koin.android.scope.currentScope
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
-    lateinit var mainViewModel: MainViewModel
+
+//    lateinit var mainViewModel: MainViewModel
+private val mainViewModel: MainViewModel by currentScope.viewModel(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -25,9 +29,9 @@ class MainActivity : AppCompatActivity() {
         val layoutManager = GridLayoutManager(this, 3)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         recyclerView.layoutManager = layoutManager
-        val useCases = GetPopularMovie(MoviesRepository(MovieDataSource(RetrofitBuilder, getString(R.string.api_key))))
-
-        mainViewModel = MainViewModel(useCases)
+//        val useCases = GetPopularMovie(MoviesRepository(MovieDataSource(RetrofitBuilder, getString(R.string.api_key))))
+//
+//        mainViewModel = MainViewModel(useCases)
 
         mainViewModel.model.observe(this, Observer(::updateUi))
 
